@@ -44,8 +44,7 @@ def add_cart():
                 break
 
     if products[item_name]['stock'] == 0:
-        print(f"\nOut of stock! No stock is available for {item_name}!")
-        return
+        return f"\nOut of stock! No stock is available for {item_name}!"
 
     while True:
         try:
@@ -76,7 +75,7 @@ def billing():
         for item, stocks in shopping_cart.items():
             total_amount = products[item]['price'] * stocks
             amount_list.append(total_amount)
-    if total_amount:
+    if amount_list:
         print(' ')
         print(f'''
 ------------------------------- Shopping Reciept ----------------------------------
@@ -88,9 +87,8 @@ def billing():
         amount_list.clear()
         shopping_cart.clear()
 
-def exit():
-    print("================= Finish shopping =================\n")
-    return
+def exit_shop():
+    return "================= Finish shopping =================\n"
 
 def choose_menu():
     while True:
@@ -117,5 +115,5 @@ if __name__ == '__main__':
         elif user_selection == 3:
             billing()
         else:
-            print(exit())
+            print(exit_shop())
             break
