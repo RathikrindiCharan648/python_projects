@@ -16,22 +16,32 @@ products = {
 
 shopping_cart = {}
 
-def menu():
-    return """
-    =============== MENU ===============
-            1) view products in shop
-            2) add to buying cart
-            3) finish shopping
-        """
+print("""
+        =============== MENU ===============
+        1) view products in shop
+        2) add to cart
+        3) customer checkout
+        4) finish shopping
+    """)
+while True:
+    try:
+        user_selection = int(input('\nEnter your choice(from menu) : '))
+        if user_selection < 1 or user_selection > 4:
+            print('\nChoose in range (1 - 4) only!')
+            continue
+    except ValueError:
+        print('Invalid choose! Try again')
+        continue
 
-def view_list():
-    output = ''
-    for item, item_details in products.items():
-        output += f'{item:<20} : ₹{item_details['price']:,.2f}\n'
-    return output
-    
-def add_cart():
-    while True:
+    if user_selection == 1:
+        print('\nThis is products list in shop')
+        print('  ')
+        for key, value in products.items():
+            print(f'  {key}  -   {value['price']}')
+        continue
+
+    elif user_selection == 2:
+        while True:
             item_name = input("\nEnter product name : ").strip().lower()
             if not item_name.replace(' ','').isalpha():
                 print('Invalid product name! Try again')
@@ -78,39 +88,13 @@ def billing():
         print(' ')
         print(f'''
 ------------------------------- Shopping Reciept ----------------------------------
-        ''')
-        for key, value in shopping_cart.items():
-            print(f'{key.capitalize()} * {value}  = {(products[key]['price']*value):,.2F}')
-        print(f'\n---------Grand Total --> {sum(amount_list):,.2F}---------')
-        print('\n =========================== THANKS FOR SHOPPING =============================')  
-        amount_list.clear()
-        shopping_cart.clear()
-
-# def exit_shop():
-#     return "================= Finish shopping =================\n"
-
-def choose_menu():
-    while True:
-        try:
-            selection = int(input('\nEnter your choice(from menu) : '))
-            print(' ')
-            if selection < 1 or selection > 4:
-                print('\nChoose in range (1 - 4) only!')
-                continue
-        except ValueError:
-            print('Invalid choose! Try again')
-            continue
+            ''')
+            for key, value in shopping_cart.items():
+                print(f'{key.capitalize()} * {value}  = {(products[key]['price']*value):,.2F}')
+            print(f'\n---------Grand Total --> {sum(amount_list):,.2F}---------')
+            print('\n =========================== THANKS FOR SHOPPING =============================')  
+            amount_list.clear()
+            shopping_cart.clear()
+    else:
+        print("================= Finish shopping =================\n")
         break
-    return selection
-
-if __name__ == '__main__':
-    while True:
-        print(menu())
-        user_selection = choose_menu()
-        if user_selection == 1:
-            print(view_list())
-        elif user_selection == 2:
-            print(add_cart())
-        else:
-            billing()
-            break
